@@ -36,4 +36,55 @@ public class Books {
         this.totalCopies=other.totalCopies;
         this.availableCopies=other.availableCopies;
     }
+
+    //lets make method to get the values of the object
+    int getId(){
+        return this.Id;
+    }
+    String getName(){
+        return this.name;
+    }
+    String getAuthor(){
+        return this.author; 
+    }
+    String getGenre(){
+        return this.genre;
+    }
+  int getTotalCopies(){
+    return this.totalCopies;
+  }
+  int getAvailableCopies(){
+    return this.availableCopies;  
+  }
+
+  boolean isAvailable(){  
+    return this.availableCopies > 0;
+  }
+
+  void setId(int id){
+    this.Id=id;
+  }
+  void setName(String name){
+    this.name=name;
+  }
+  void setAuthor(String author){
+    this.author=author;
+  }
+  void setGenre(String genre){
+    this.genre=genre;
+  }   
+  void setTotalCopies(int totalCopies){
+    this.totalCopies=totalCopies;
+  }
+  void setAvailableCopies(int availableCopies){
+    if(availableCopies<0){
+      this.availableCopies=0;
+    }else if(availableCopies>this.totalCopies){
+      this.availableCopies=this.totalCopies;
+    }else{
+      this.availableCopies=availableCopies;
+    }
+  }
+
+  
 }
