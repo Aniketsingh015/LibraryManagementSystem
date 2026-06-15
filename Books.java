@@ -86,5 +86,31 @@ public class Books {
     }
   }
 
-  
+  boolean borrowBook(){
+    if(this.availableCopies>0){
+      this.availableCopies--;
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  boolean returnBook(){
+    if(this.availableCopies<this.totalCopies){
+      this.availableCopies++;
+      return true;
+    }else{
+      return false;
+    }
+  }
+  void displayBookInfo(){
+    System.out.println("Book ID: " + this.Id);
+    System.out.println("Book Name: " + this.name);
+    System.out.println("Author: " + this.author);
+    System.out.println("Genre: " + this.genre);
+    System.out.println("Total Copies: " + this.totalCopies);
+    System.out.println("Available Copies: " + this.availableCopies);
+  }
+
+
 }
