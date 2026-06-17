@@ -15,6 +15,33 @@
  *
  * import java.util.ArrayList;  ← we need this to use ArrayList
  */
+import java.util.ArrayList;
 public class Members {
     
-}
+    private int memberId;
+    private String name;
+    private String email;
+    private String memberType;   // "Student" or "Teacher"
+    private int maxBooksAllowed;  //3 for students, 5 for teachers
+
+    // ArrayList<String> means: a list that holds String values
+    // Each String will be a book title the member has borrowed
+    // We'll upgrade this to List<Book> on Day 6
+
+    private ArrayList<String> borrowedBooks;  //list of books currently borrowed
+
+    // =========================================================
+    // CONSTRUCTOR — Parameterized
+    // =========================================================
+    // We set maxBorrowLimit automatically based on memberType
+    // so the caller doesn't have to worry about the rules
+
+    public Members(int memberId, String name, String email, String memberType) {
+        setMemberId(memberId);
+        setName(name);
+        setEmail(email);
+        setMemberType(memberType);
+        this.borrowedBooks = new ArrayList<>();
+    }       
+
+    
