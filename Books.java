@@ -1,11 +1,11 @@
 public class Books {
     //for day 1 we will directlly create default constructor built an object rather than using modifiers and encapsulation prop
-    int Id;
-    String name;
-    String author;
-    String genre;
-    int totalCopies;
-    int availableCopies;
+    private int Id;
+    private String name;
+    private String author;
+    private String genre;
+    private int totalCopies;
+    private int availableCopies;
 
     // now it's time to create constructor of the class template
     Books(){
@@ -38,45 +38,54 @@ public class Books {
     }
 
     //lets make method to get the values of the object
-    int getId(){
+    public int getId(){
         return this.Id;
     }
-    String getName(){
+    public String getName(){
         return this.name;
     }
-    String getAuthor(){
+    public String getAuthor(){
         return this.author; 
     }
-    String getGenre(){
+    public String getGenre(){
         return this.genre;
     }
-  int getTotalCopies(){
-    return this.totalCopies;
-  }
-  int getAvailableCopies(){
-    return this.availableCopies;  
+    public int getTotalCopies(){
+        return this.totalCopies;
+    }
+    public int getAvailableCopies(){
+        return this.availableCopies;  
   }
 
-  boolean isAvailable(){  
+  public boolean isAvailable(){  
     return this.availableCopies > 0;
   }
 
-  void setId(int id){
+  public void setId(int id){
+    if(id<=0){
+      System.out.println("Invalid ID. ID must be positive.");
+      return;
+    }
     this.Id=id;
   }
-  void setName(String name){
+  public void setName(String name){
+    // Rule: title cannot be null or empty/blank
+    if(name==null || name.trim().isEmpty()){
+      System.out.println("Invalid name. Name cannot be empty.");
+      return;
+    }
     this.name=name;
   }
-  void setAuthor(String author){
+  public void setAuthor(String author){
     this.author=author;
   }
-  void setGenre(String genre){
+  public void setGenre(String genre){
     this.genre=genre;
   }   
-  void setTotalCopies(int totalCopies){
+  public void setTotalCopies(int totalCopies){
     this.totalCopies=totalCopies;
   }
-  void setAvailableCopies(int availableCopies){
+  public void setAvailableCopies(int availableCopies){
     if(availableCopies<0){
       this.availableCopies=0;
     }else if(availableCopies>this.totalCopies){
@@ -86,7 +95,7 @@ public class Books {
     }
   }
 
-  boolean borrowBook(){
+  public boolean borrowBook(){
     if(this.availableCopies>0){
       this.availableCopies--;
       return true;
@@ -95,7 +104,7 @@ public class Books {
     }
   }
 
-  boolean returnBook(){
+  public boolean returnBook(){
     if(this.availableCopies<this.totalCopies){
       this.availableCopies++;
       return true;
@@ -103,7 +112,7 @@ public class Books {
       return false;
     }
   }
-  void displayBookInfo(){
+  public void displayBookInfo(){
     System.out.println("Book ID: " + this.Id);
     System.out.println("Book Name: " + this.name);
     System.out.println("Author: " + this.author);
