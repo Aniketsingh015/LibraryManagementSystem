@@ -65,9 +65,74 @@ public class Members {
         return this.maxBooksAllowed;
     }
 
+    //how many books borrowed
+    public int getBorrowedBooksCount() {
+        return this.borrowedBooks.size();
+    }
+
     //calculate this member can borrow more books or not
     public boolean canBorrowMoreBooks() {
         return borrowedBooks.size() < maxBooksAllowed;
     }
+
+    // =========================================================
+    // SETTERS — with validation
+    // =========================================================
+
+    public void setMemberId(int memberId) {
+        if (memberId <= 0) {
+            System.out.println("Warning: Member ID must be positive. Ignoring: " + memberId);
+            return;
+        }
+        this.memberId = memberId;
+    }
+ 
+    public void setName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            System.out.println("Warning: Member name cannot be empty. Ignoring.");
+            return;
+        }
+        // Only letters and spaces allowed in a name
+        // matches() checks if the string fits a pattern
+        // "[a-zA-Z ]+" means: one or more letters or spaces
+        if (!name.trim().matches("[a-zA-Z ]+")) {
+            System.out.println("Warning: Name should contain only letters. Ignoring: " + name);
+            return;
+        }
+        this.name = name.trim();
+    }
+ 
+    public void setEmail(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            System.out.println("Warning: Email cannot be empty. Ignoring.");
+            return;
+        }
+        // Basic email check: must contain "@" and a "."
+        // contains() checks if a string includes a substring
+        if (!email.contains("@") || !email.contains(".")) {
+            System.out.println("Warning: Invalid email format. Must contain '@' and '.'. Ignoring: " + email);
+            return;
+        }
+        this.email = email.trim().toLowerCase();
+    }
+ 
+    public void setMemberType(String memberType) {
+        if (memberType == null) {
+            this.memberType  = "STUDENT";
+            this.maxBooksAllowed = 3;
+            return;
+        }
+        // toUpperCase() so "student", "Student", "STUDENT" all work
+        String type = memberType.toUpperCase();
+        if (type.equals("TEACHER")) {
+            this.memberType     = "TEACHER";
+            this.maxBooksAllowed = 5;   // teachers get higher limit
+        } else {
+            this.memberType     = "STUDENT";
+            this.maxBooksAllowed = 3;
+        }
+    }
+}
+
 
     
