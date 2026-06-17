@@ -74,15 +74,28 @@ public class Books {
       System.out.println("Invalid name. Name cannot be empty.");
       return;
     }
-    this.name=name;
+    this.name=name.trim(); 
+    // trim removes leading and trailing whitespace from the string ex: "  The Great Gatsby  " becomes "The Great Gatsby"
   }
   public void setAuthor(String author){
-    this.author=author;
+    if(author==null || author.trim().isEmpty()){
+      System.out.println("Invalid author. Author cannot be empty.");
+      return;
+    }
+    this.author=author.trim();
   }
   public void setGenre(String genre){
-    this.genre=genre;
+    if(genre==null || genre.trim().isEmpty()){
+      System.out.println("Invalid genre. Genre cannot be empty.");
+      return;
+    }
+    this.genre=genre.trim();
   }   
   public void setTotalCopies(int totalCopies){
+    if(totalCopies<0){
+      System.out.println("Invalid total copies. Total copies cannot be negative.");
+      return;
+    }
     this.totalCopies=totalCopies;
   }
   public void setAvailableCopies(int availableCopies){
@@ -119,6 +132,7 @@ public class Books {
     System.out.println("Genre: " + this.genre);
     System.out.println("Total Copies: " + this.totalCopies);
     System.out.println("Available Copies: " + this.availableCopies);
+    System.out.println("Status           : " + (isAvailable() ? "Available" : "All Copies Borrowed"));
   }
 
 
