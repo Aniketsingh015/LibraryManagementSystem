@@ -44,4 +44,30 @@ public class Members {
         this.borrowedBooks = new ArrayList<>();
     }       
 
+    //adding getters
+    public int getMemberId() {
+        return this.memberId;
+    }       
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public String getMemberType() {
+        return this.memberType;
+    }
+
+    public int getMaxBooksAllowed() {
+        return this.maxBooksAllowed;
+    }
+
+    //calculate this member can borrow more books or not
+    public boolean canBorrowMoreBooks() {
+        return borrowedBooks.size() < maxBooksAllowed;
+    }
+
     
