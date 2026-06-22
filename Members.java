@@ -16,13 +16,10 @@
  * import java.util.ArrayList;  ← we need this to use ArrayList
  */
 import java.util.ArrayList;
-public class Members {
+public class Members extends Person {
     
-    private int memberId;
-    private String name;
-    private String email;
     private String memberType;   // "Student" or "Teacher"
-    private int maxBooksAllowed;  //3 for students, 5 for teachers
+    private int maxBooksLimit;  //3 for students, 5 for teachers
 
     // ArrayList<String> means: a list that holds String values
     // Each String will be a book title the member has borrowed
@@ -36,101 +33,95 @@ public class Members {
     // We set maxBorrowLimit automatically based on memberType
     // so the caller doesn't have to worry about the rules
 
-    public Members(int memberId, String name, String email, String memberType) {
-        setMemberId(memberId);
-        setName(name);
-        setEmail(email);
+    public Members(int id, String name, String email, String memberType) {
+        super(id,name,email);
         setMemberType(memberType);
         this.borrowedBooks = new ArrayList<>();
     }       
 
     //adding getters
-    public int getMemberId() {
-        return this.memberId;
-    }       
 
-    public String getName() {
-        return this.name;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
 
     public String getMemberType() {
         return this.memberType;
     }
 
-    public int getMaxBooksAllowed() {
-        return this.maxBooksAllowed;
+    public int getMaxBooksLimit() {
+        return this.maxBooksLimit;
     }
 
     //how many books borrowed
-    public int getBorrowedBooksCount() {
-        return this.borrowedBooks.size();
+    public ArrayList<String> getBorrowedBooks() {
+        return this.borrowedBooks;
     }
+    public int getBorrowedCount()       
+            { return this.borrowedBooks.size();}
 
     //calculate this member can borrow more books or not
     public boolean canBorrowMoreBooks() {
-        return borrowedBooks.size() < maxBooksAllowed;
+        return borrowedBooks.size() < maxBooksLimit;
     }
 
     // =========================================================
     // SETTERS — with validation
     // =========================================================
 
-    public void setMemberId(int memberId) {
-        if (memberId <= 0) {
-            System.out.println("Warning: Member ID must be positive. Ignoring: " + memberId);
-            return;
-        }
-        this.memberId = memberId;
-    }
+    
  
-    public void setName(String name) {
-        if (name == null || name.trim().isEmpty()) {
-            System.out.println("Warning: Member name cannot be empty. Ignoring.");
-            return;
-        }
-        // Only letters and spaces allowed in a name
-        // matches() checks if the string fits a pattern
-        // "[a-zA-Z ]+" means: one or more letters or spaces
-        if (!name.trim().matches("[a-zA-Z ]+")) {
-            System.out.println("Warning: Name should contain only letters. Ignoring: " + name);
-            return;
-        }
-        this.name = name.trim();
-    }
+    
  
-    public void setEmail(String email) {
-        if (email == null || email.trim().isEmpty()) {
-            System.out.println("Warning: Email cannot be empty. Ignoring.");
-            return;
-        }
-        // Basic email check: must contain "@" and a "."
-        // contains() checks if a string includes a substring
-        if (!email.contains("@") || !email.contains(".")) {
-            System.out.println("Warning: Invalid email format. Must contain '@' and '.'. Ignoring: " + email);
-            return;
-        }
-        this.email = email.trim().toLowerCase();
-    }
+    
  
     public void setMemberType(String memberType) {
-        if (memberType == null) {
-            this.memberType  = "STUDENT";
-            this.maxBooksAllowed = 3;
+        if (memberType != null && memberType.toUpperCase().equals("TEACHER")) {
+            this.memberType  = "TEACHER";
+            this.maxBooksLimit = 5;
             return;
-        }
-        // toUpperCase() so "student", "Student", "STUDENT" all work
-        String type = memberType.toUpperCase();
-        if (type.equals("TEACHER")) {
-            this.memberType     = "TEACHER";
-            this.maxBooksAllowed = 5;   // teachers get higher limit
-        } else {
+        }else{
             this.memberType     = "STUDENT";
-            this.maxBooksAllowed = 3;
+            this.maxBooksLimit = 3;
         }
+    }
+     public boolean borrowBook(String bookTitle) {
+        if (!canBorrowMoreBooks()) {
+            System.out.println(getname() + " has reached the borrow limit of " + this.maxBooksLimit + ".");
+            return false;
+        }
+        if (this.borrowedBooks.contains(bookTitle)) {
+            System.out.println(getname() + " already has '" + bookTitle + "'.");
+            return false;
+        }
+        this.borrowedBooks.add(bookTitle);
+        System.out.println(getname() + " borrowed '" + bookTitle + "'.");
+        return true;
+    }
+      public boolean returnBook(String bookTitle) {
+        if (this.borrowedBooks.remove(bookTitle)) {
+            System.out.println(getname() + " returned '" + bookTitle + "'.");
+            return true;
+        }
+        System.out.println(getname() + " does not have '" + bookTitle + "'.");
+        return false;
+    }
+ 
+    @Override
+    public void displayInfo() {
+        System.out.println("=============================");
+        System.out.println("Member ID    : " + getId());
+        System.out.println("Name         : " + getname());
+        System.out.println("Email        : " + getemail());
+        System.out.println("Type         : " + this.memberType);
+        System.out.println("Borrow Limit : " + this.maxBooksLimit);
+        System.out.println("Borrowed     : " + getBorrowedCount() + " / " + this.maxBooksLimit);
+        if (this.borrowedBooks.isEmpty()) {
+            System.out.println("Books        : (none)");
+        } else {
+            System.out.println("Books        :");
+            for (String book : this.borrowedBooks) {
+                System.out.println("               - " + book);
+            }
+        }
+        System.out.println("=============================");
     }
 }
 
